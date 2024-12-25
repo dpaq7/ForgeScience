@@ -1,44 +1,64 @@
-# Forge Steel
+# ForgeScience
 
-**FORGE STEEL** is a hero builder app for **DRAW STEEL**, designed by [Andy Aiken](mailto:andy.aiken@live.co.uk).
+A modern character creation and management system for tabletop RPGs, with a focus on the Star Trek campaign setting. Built with React and TypeScript.
 
-## Heroes
+## Features
 
-With this app you can create heroes using the **DRAW STEEL** backer packet.
+- Character Creation & Management
+- Campaign Settings Support
+- Homebrew Content Integration
+- Star Trek Setting Implementation
+- Modern React-based UI
 
-![Hero Edit](./src/assets/screenshots/hero-edit.png)
-Here is a hero being edited.
+## Getting Started
 
-![Hero Sheet](./src/assets/screenshots/hero-sheet.png)
-This shows a hero's character sheet.
+### Prerequisites
 
-![Hero State](./src/assets/screenshots/hero-state.png)
-Here we can see the hero being played in a session.
+- Node.js (v18 or higher)
+- npm
 
-![Hero Roll](./src/assets/screenshots/hero-roll.png)
-The player is making the power roll for one of the hero's abilities.
+### Installation
 
-## Homebrew
+1. Clone the repository:
+```bash
+git clone https://github.com/dpaq7/ForgeScience.git
+cd ForgeScience
+```
 
-You can also use this app to create homebrew hero-building elements - ancestries, cultures, careers, classes, and complications.
+2. Install dependencies:
+```bash
+npm install
+```
 
-![Elements](./src/assets/screenshots/elements.png)
-Here we can see the list of elements that can be homebrewed. To create a homebrew element you can create it from whole cloth, or copy an official element.
+3. Start the development server:
+```bash
+npm run dev
+```
 
-![Homebrew](./src/assets/screenshots/homebrew.png)
-here we can see a homebrew kit being created.
+The application will be available at `http://localhost:5173`
 
-## Legal
+### Building for Production
 
-**FORGE STEEL** is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
+```bash
+npm run build
+```
 
-**DRAW STEEL** © 2024 MCDM Productions, LLC.
+## Project Structure
 
-## Development
+- `/src/components` - React components
+- `/src/data` - Game data and collections
+- `/src/logic` - Game mechanics and calculations
+- `/src/models` - TypeScript interfaces and types
+- `/src/enums` - Constants and enumerations
 
-**FORGE STEEL** is written in Typescript, using React and Ant Design.
+## Contributing
 
-If you would like to contribute, you can:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-* Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues).
-* Fork the repository, make your changes to the code, and raise a pull request
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Live Demo
+
+Visit the live demo at [https://dpaq7.github.io/ForgeScience/](https://dpaq7.github.io/ForgeScience/)
