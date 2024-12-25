@@ -1,5 +1,7 @@
 # ForgeScience
 
+[![Deploy to GitHub Pages](https://github.com/dpaq7/ForgeScience/actions/workflows/deploy.yml/badge.svg)](https://github.com/dpaq7/ForgeScience/actions/workflows/deploy.yml)
+
 A modern character creation and management system for tabletop RPGs, with a focus on the Star Trek campaign setting. Built with React and TypeScript.
 
 ## Features
