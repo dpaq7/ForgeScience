@@ -3,8 +3,8 @@
 	"private": true,
 	"version": "4.4.0",
 	"type": "module",
-	"repository": "https://github.com/andyaiken/forgesteel.git",
-	"homepage": "https://andyaiken.github.io/forgesteel/",
+	"repository": "https://github.com/dpaq7/ForgeScience.git",
+	"homepage": "https://dpaq7.github.io/ForgeScience/",
 	"scripts": {
 		"update": "npx npm-check-updates --interactive --format group",
 		"dev": "vite",
