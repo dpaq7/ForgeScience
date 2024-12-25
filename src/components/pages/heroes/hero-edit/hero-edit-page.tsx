@@ -145,6 +145,23 @@ export const HeroEditPage = (props: Props) => {
 			}
 		};
 
+		const canNavigateToPage = (page: Page) => {
+			switch (page) {
+				case Page.Ancestry:
+					return true;
+				case Page.Culture:
+					return hero.ancestry !== null;
+				case Page.Career:
+					return hero.culture !== null;
+				case Page.Class:
+					return hero.career !== null;
+				case Page.Complication:
+					return hero.class !== null;
+				case Page.Details:
+					return hero.complication !== null;
+			}
+		};
+
 		const setAncestry = (ancestry: Ancestry | null) => {
 			const ancestryCopy = JSON.parse(JSON.stringify(ancestry)) as Ancestry | null;
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -419,7 +436,8 @@ export const HeroEditPage = (props: Props) => {
 										<div className='page-button-subtitle'>{getPageState(page)}</div>
 									</div>
 								),
-								title: page
+								title: page,
+								disabled: !canNavigateToPage(page)
 							}))}
 							block={true}
 							value={page}

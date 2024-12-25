@@ -97,6 +97,20 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
+	static createClassAbilityFeature = (data: { id: string, cost: number, count: number, selectedIDs: string[] }) => {
+        return {
+            id: data.id,
+            name: `Class Ability Selection (Cost ${data.cost})`,
+            description: `Select ${data.count} class ${data.count === 1 ? 'ability' : 'abilities'} that cost ${data.cost} points.`,
+            type: FeatureType.ClassAbility,
+            data: {
+                cost: data.cost,
+                count: data.count,
+                selectedIDs: data.selectedIDs
+            } as FeatureClassAbilityData
+        } as Feature;
+    };
+
 	static createDamageModifierFeature = (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
 		return {
 			id: data.id,
@@ -148,6 +162,20 @@ export class FeatureLogic {
 			data: {
 				types: data.types || [],
 				count: count,
+				selected: []
+			} as FeatureKitData
+		} as Feature;
+	};
+
+	static createKitFeature = (data: { id: string, name: string, description: string, options: { kit: string, value: number }[], count: number }) => {
+		return {
+			id: data.id,
+			name: data.name,
+			description: data.description,
+			type: FeatureType.Kit,
+			data: {
+				types: data.options.map(option => option.kit as KitType),
+				count: data.count,
 				selected: []
 			} as FeatureKitData
 		} as Feature;

@@ -1,0 +1,497 @@
+{
+	"id": "MK2RNZNY0DSPgJA2",
+	"name": "Shedrax",
+	"settingIDs": [
+		"",
+		"orden",
+		"star-trek"
+	],
+	"ancestry": {
+		"id": "ancestry-ferengi",
+		"name": "Ferengi",
+		"description": "A humanoid species from Ferenginar, characterized by their large ears, head ridges, and sharp business acumen. Ferengi society revolves around the pursuit of profit and the Rules of Acquisition.",
+		"features": [
+			{
+				"id": "ferengi-size",
+				"name": "Size",
+				"description": "",
+				"type": "Size",
+				"data": {
+					"size": {
+						"value": 1,
+						"mod": "M"
+					}
+				}
+			},
+			{
+				"id": "ferengi-hearing",
+				"name": "Sensitive Hearing",
+				"description": "Ferengi possess exceptionally large ears giving them acute hearing.",
+				"type": "Bonus",
+				"data": {
+					"field": "Intuition",
+					"value": 2,
+					"valuePerLevel": 0
+				}
+			},
+			{
+				"id": "ferengi-cunning",
+				"name": "Business Acumen",
+				"description": "Ferengi are raised from birth to understand complex business and social negotiations.",
+				"type": "Bonus",
+				"data": {
+					"field": "Presence",
+					"value": 2,
+					"valuePerLevel": 0
+				}
+			}
+		]
+	},
+	"culture": {
+		"id": "culture-bespoke-trek",
+		"name": "Star Trek Culture",
+		"description": "Create your own unique background in the Star Trek universe by choosing your language, environment, organization, and upbringing.",
+		"languages": [
+			"Federation Standard",
+			"Vulcan",
+			"Klingon",
+			"Romulan",
+			"Andorian",
+			"Tellarite",
+			"Ferengi",
+			"Cardassian",
+			"Bajoran"
+		],
+		"environment": {
+			"id": "culture-environment-choice",
+			"name": "Environment",
+			"description": "Choose the environment where you were raised.",
+			"type": "Choice",
+			"data": {
+				"options": [
+					{
+						"feature": {
+							"id": "env-starship",
+							"name": "Starship",
+							"description": "You were raised aboard a starship, accustomed to the hum of warp engines and the close-knit community of a crew. You're comfortable with advanced technology and confined spaces.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Exploration",
+									"Lore"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "env-space-station",
+							"name": "Space Station",
+							"description": "Growing up on a space station exposed you to diverse species and cultures. You're adept at navigating complex social environments and understanding different perspectives.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Interpersonal",
+									"Intrigue"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "env-federation",
+							"name": "Federation World",
+							"description": "You were raised on a Federation member world, immersed in the ideals of peace, scientific advancement, and cultural exchange.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Lore",
+									"Interpersonal"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "env-colony",
+							"name": "Colony World",
+							"description": "Life on a colony world taught you resourcefulness and adaptability. Whether a thriving settlement or a struggling outpost, you learned to make do with what you had.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Crafting",
+									"Exploration"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					}
+				],
+				"count": 1,
+				"selected": [
+					{
+						"id": "env-colony",
+						"name": "Colony World",
+						"description": "Life on a colony world taught you resourcefulness and adaptability. Whether a thriving settlement or a struggling outpost, you learned to make do with what you had.",
+						"type": "Skill Choice",
+						"data": {
+							"options": [],
+							"listOptions": [
+								"Crafting",
+								"Exploration"
+							],
+							"count": 1,
+							"selected": [
+								"Climb"
+							]
+						}
+					}
+				]
+			}
+		},
+		"organization": {
+			"id": "culture-organization-choice",
+			"name": "Organization",
+			"description": "Choose the organization that influenced your upbringing.",
+			"type": "Choice",
+			"data": {
+				"options": [
+					{
+						"feature": {
+							"id": "org-starfleet",
+							"name": "Starfleet",
+							"description": "You were raised in a family with strong ties to Starfleet, understanding its principles of exploration, scientific discovery, and peacekeeping.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Lore",
+									"Exploration"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "org-diplomatic",
+							"name": "Diplomatic Corps",
+							"description": "Growing up in the Federation Diplomatic Corps, you learned the art of negotiation and cultural sensitivity.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Interpersonal",
+									"Lore"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "org-merchant",
+							"name": "Merchant Fleet",
+							"description": "Your family worked in interstellar trade, exposing you to various cultures and teaching you the value of commerce.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Interpersonal",
+									"Intrigue"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "org-scientific",
+							"name": "Scientific Institute",
+							"description": "Raised among scientists and researchers, you developed a deep appreciation for discovery and empirical thinking.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Lore",
+									"Crafting"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					}
+				],
+				"count": 1,
+				"selected": [
+					{
+						"id": "org-merchant",
+						"name": "Merchant Fleet",
+						"description": "Your family worked in interstellar trade, exposing you to various cultures and teaching you the value of commerce.",
+						"type": "Skill Choice",
+						"data": {
+							"options": [],
+							"listOptions": [
+								"Interpersonal",
+								"Intrigue"
+							],
+							"count": 1,
+							"selected": [
+								"Brag"
+							]
+						}
+					}
+				]
+			}
+		},
+		"upbringing": {
+			"id": "culture-upbringing-choice",
+			"name": "Upbringing",
+			"description": "Choose how you were raised.",
+			"type": "Choice",
+			"data": {
+				"options": [
+					{
+						"feature": {
+							"id": "up-academic",
+							"name": "Academic",
+							"description": "You were raised in an environment that valued education and scientific inquiry, attending prestigious institutions like the Vulcan Science Academy or the Daystrom Institute.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Lore"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "up-frontier",
+							"name": "Frontier",
+							"description": "Growing up on the edges of Federation space taught you self-reliance and adaptability in challenging situations.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Exploration",
+									"Intrigue"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "up-military",
+							"name": "Military",
+							"description": "Raised in a military family, you learned discipline, strategy, and the importance of duty from an early age.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Exploration",
+									"Interpersonal"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					},
+					{
+						"feature": {
+							"id": "up-civilian",
+							"name": "Civilian",
+							"description": "Your civilian upbringing gave you a grounded perspective on life in the Federation and its values.",
+							"type": "Skill Choice",
+							"data": {
+								"options": [],
+								"listOptions": [
+									"Crafting",
+									"Interpersonal"
+								],
+								"count": 1,
+								"selected": []
+							}
+						},
+						"value": 1
+					}
+				],
+				"count": 1,
+				"selected": [
+					{
+						"id": "up-academic",
+						"name": "Academic",
+						"description": "You were raised in an environment that valued education and scientific inquiry, attending prestigious institutions like the Vulcan Science Academy or the Daystrom Institute.",
+						"type": "Skill Choice",
+						"data": {
+							"options": [],
+							"listOptions": [
+								"Lore"
+							],
+							"count": 1,
+							"selected": [
+								"Federation Law"
+							]
+						}
+					}
+				]
+			}
+		}
+	},
+	"class": {
+		"id": "class-starfleet-officer",
+		"name": "Starfleet Officer",
+		"description": "A graduate of Starfleet Academy, trained in starship operations, Federation protocols, and the principles of exploration and peacekeeping.",
+		"heroicResource": "Command Points",
+		"subclassName": "Specialization",
+		"subclassCount": 1,
+		"primaryCharacteristics": [
+			"Presence"
+		],
+		"featuresByLevel": [
+			{
+				"level": 1,
+				"features": [
+					{
+						"id": "starfleet-training",
+						"name": "Starfleet Training",
+						"description": "Your Starfleet training has prepared you for leadership.",
+						"type": "Bonus",
+						"data": {
+							"field": "Presence",
+							"value": 2,
+							"valuePerLevel": 0
+						}
+					}
+				]
+			}
+		],
+		"abilities": [],
+		"subclasses": [],
+		"level": 3,
+		"characteristics": [
+			{
+				"characteristic": "Might",
+				"value": 1
+			},
+			{
+				"characteristic": "Agility",
+				"value": -1
+			},
+			{
+				"characteristic": "Reason",
+				"value": 1
+			},
+			{
+				"characteristic": "Intuition",
+				"value": 1
+			},
+			{
+				"characteristic": "Presence",
+				"value": 2
+			}
+		]
+	},
+	"career": {
+		"id": "career-command-officer",
+		"name": "Command Officer",
+		"description": "You are trained in leadership and tactical decision-making, responsible for commanding starships and coordinating crew operations. Your expertise lies in strategy, diplomacy, and crisis management.",
+		"features": [
+			{
+				"id": "command-officer-feature-1",
+				"name": "Skills",
+				"description": "",
+				"type": "Skill Choice",
+				"data": {
+					"options": [],
+					"listOptions": [
+						"Interpersonal",
+						"Intrigue"
+					],
+					"count": 2,
+					"selected": [
+						"Alertness",
+						"Disguise"
+					]
+				}
+			},
+			{
+				"id": "command-officer-feature-2",
+				"name": "Presence",
+				"description": "",
+				"type": "Bonus",
+				"data": {
+					"field": "Presence",
+					"value": 1,
+					"valuePerLevel": 0
+				}
+			}
+		],
+		"title": {
+			"id": "command-officer-title",
+			"name": "Command Officer Title",
+			"description": "Your rank and title within Starfleet Command",
+			"type": "Text",
+			"data": null
+		},
+		"incitingIncidents": {
+			"options": [],
+			"selectedID": null
+		}
+	},
+	"complication": {
+		"id": "complication-borg-implants",
+		"name": "Borg Implant Remnants",
+		"description": "You retain some Borg implants from a previous assimilation attempt. While they grant some benefits, they also cause physical and psychological complications.",
+		"features": [
+			{
+				"id": "borg-implants-feature",
+				"name": "Cybernetic Integration",
+				"description": "You have enhanced technological capabilities but must make periodic Will saves to resist the lingering influence of the Collective.",
+				"type": "Text",
+				"data": null
+			}
+		]
+	},
+	"state": {
+		"staminaDamage": 0,
+		"recoveriesUsed": 0,
+		"victories": 0,
+		"xp": 25,
+		"heroicResource": 0,
+		"heroTokens": 0,
+		"renown": 0,
+		"projectPoints": 0,
+		"conditions": [],
+		"inventory": []
+	}
+}

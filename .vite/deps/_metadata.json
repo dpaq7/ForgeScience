@@ -1,0 +1,58 @@
+{
+  "hash": "b18bfcc4",
+  "configHash": "8a6e7397",
+  "lockfileHash": "e3b0c442",
+  "browserHash": "fe672d15",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "eb66bf0c",
+      "needsInterop": true
+    },
+    "showdown": {
+      "src": "../../node_modules/showdown/dist/showdown.js",
+      "file": "showdown.js",
+      "fileHash": "de64411b",
+      "needsInterop": true
+    },
+    "html2canvas": {
+      "src": "../../node_modules/html2canvas/dist/html2canvas.esm.js",
+      "file": "html2canvas.js",
+      "fileHash": "2fb62652",
+      "needsInterop": false
+    },
+    "jspdf": {
+      "src": "../../node_modules/jspdf/dist/jspdf.es.min.js",
+      "file": "jspdf.js",
+      "fileHash": "969ae732",
+      "needsInterop": false
+    },
+    "antd": {
+      "src": "../../node_modules/antd/es/index.js",
+      "file": "antd.js",
+      "fileHash": "4c87b1d0",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-SZVM5CFR": {
+      "file": "chunk-SZVM5CFR.js"
+    },
+    "purify.es-CODS6WNU": {
+      "file": "purify__es-CODS6WNU.js"
+    },
+    "index.es-NPF7UEOQ": {
+      "file": "index__es-NPF7UEOQ.js"
+    },
+    "chunk-O2PAOXRP": {
+      "file": "chunk-O2PAOXRP.js"
+    },
+    "chunk-SITVF2AJ": {
+      "file": "chunk-SITVF2AJ.js"
+    },
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
+    }
+  }
+}

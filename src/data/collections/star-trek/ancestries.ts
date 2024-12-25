@@ -1,8 +1,67 @@
 import { Ancestry } from '../../../models/ancestry';
 import { FeatureField } from '../../../enums/feature-field';
 import { FeatureLogic } from '../../../logic/feature-logic';
+import { DamageModifierType } from '../../../enums/damage-modifier-type';
 
 export class StarTrekAncestries {
+    static human: Ancestry = {
+        id: 'ancestry-human',
+        name: 'Human',
+        description: 'Humans from Earth are known for their adaptability, curiosity, and determination. Their greatest strength lies in their diversity and ability to work together despite their differences.',
+        features: [
+            FeatureLogic.createSizeFeature({
+                id: 'human-size',
+                sizeValue: 1,
+                sizeMod: 'M'
+            }),
+            FeatureLogic.createBonusFeature({
+                id: 'human-adaptability',
+                name: 'Human Adaptability',
+                description: 'Humans are remarkably adaptable, able to thrive in various environments and situations.',
+                field: FeatureField.Stability,
+                value: 2
+            }),
+            FeatureLogic.createChoiceFeature({
+                id: 'human-specialization',
+                name: 'Human Specialization',
+                description: 'Humans excel in their chosen fields of expertise.',
+                options: [
+                    {
+                        feature: FeatureLogic.createBonusFeature({
+                            id: 'human-diplomatic',
+                            name: 'Diplomatic Prowess',
+                            description: 'You have a natural talent for diplomacy and negotiation.',
+                            field: FeatureField.Presence,
+                            value: 2
+                        }),
+                        value: 1
+                    },
+                    {
+                        feature: FeatureLogic.createBonusFeature({
+                            id: 'human-tactical',
+                            name: 'Tactical Insight',
+                            description: 'You possess an innate understanding of combat tactics.',
+                            field: FeatureField.Might,
+                            value: 2
+                        }),
+                        value: 1
+                    },
+                    {
+                        feature: FeatureLogic.createBonusFeature({
+                            id: 'human-scientific',
+                            name: 'Scientific Mind',
+                            description: 'Your analytical abilities are particularly sharp.',
+                            field: FeatureField.Reason,
+                            value: 2
+                        }),
+                        value: 1
+                    }
+                ],
+                count: 1
+            })
+        ]
+    };
+
     static vulcan: Ancestry = {
         id: 'ancestry-vulcan',
         name: 'Vulcan',
@@ -21,11 +80,27 @@ export class StarTrekAncestries {
                 value: 2
             }),
             FeatureLogic.createBonusFeature({
-                id: 'vulcan-intellect',
+                id: 'vulcan-logic',
                 name: 'Logical Mind',
-                description: 'Vulcans are trained from birth to suppress emotion and rely on logic.',
+                description: 'Vulcans are trained from birth to suppress emotion and embrace logic.',
                 field: FeatureField.Reason,
                 value: 2
+            }),
+            FeatureLogic.createFeature({
+                id: 'vulcan-mind-meld',
+                name: 'Mind Meld',
+                description: 'You can establish a telepathic bond with a willing creature by touching them, allowing you to share thoughts and memories.'
+            }),
+            FeatureLogic.createDamageModifierFeature({
+                id: 'vulcan-mental-discipline',
+                name: 'Mental Discipline',
+                description: 'Your rigorous mental training provides resistance against psychic attacks.',
+                modifiers: [{
+                    type: DamageModifierType.Resistance,
+                    damageType: 'Psychic',
+                    value: 2,
+                    valuePerLevel: 0
+                }]
             })
         ]
     };
@@ -33,7 +108,7 @@ export class StarTrekAncestries {
     static klingon: Ancestry = {
         id: 'ancestry-klingon',
         name: 'Klingon',
-        description: 'A warrior species from Qo\'noS, known for their great strength, honor-based culture, and distinctive forehead ridges. Klingons value combat prowess and personal honor above all else.',
+        description: 'A warrior species known for their strength, honor, and combat prowess. Klingons possess enhanced physical capabilities due to their redundant organ systems.',
         features: [
             FeatureLogic.createSizeFeature({
                 id: 'klingon-size',
@@ -42,17 +117,49 @@ export class StarTrekAncestries {
             }),
             FeatureLogic.createBonusFeature({
                 id: 'klingon-strength',
-                name: 'Warrior Physiology',
-                description: 'Klingons are naturally stronger than most humanoids and possess redundant organ systems.',
+                name: 'Warrior Physique',
+                description: 'Klingons are naturally stronger than most humanoids.',
                 field: FeatureField.Might,
                 value: 3
             }),
-            FeatureLogic.createBonusFeature({
-                id: 'klingon-endurance',
-                name: 'Redundant Biology',
-                description: 'Klingon bodies have redundant organs and systems, making them incredibly resilient.',
-                field: FeatureField.Stamina,
-                value: 2
+            FeatureLogic.createDamageModifierFeature({
+                id: 'klingon-redundancy',
+                name: 'Redundant Organs',
+                description: 'Your backup organ systems provide enhanced survivability.',
+                modifiers: [{
+                    type: DamageModifierType.Resistance,
+                    damageType: 'Physical',
+                    value: 1,
+                    valuePerLevel: 0
+                }]
+            }),
+            FeatureLogic.createChoiceFeature({
+                id: 'klingon-house',
+                name: 'Great House',
+                description: 'Your family belongs to one of the Great Houses of the Klingon Empire.',
+                options: [
+                    {
+                        feature: FeatureLogic.createBonusFeature({
+                            id: 'klingon-warrior',
+                            name: 'House of Warriors',
+                            description: 'Your house is renowned for producing legendary warriors.',
+                            field: FeatureField.Might,
+                            value: 1
+                        }),
+                        value: 1
+                    },
+                    {
+                        feature: FeatureLogic.createBonusFeature({
+                            id: 'klingon-tactician',
+                            name: 'House of Tacticians',
+                            description: 'Your house is known for its military strategists.',
+                            field: FeatureField.Reason,
+                            value: 1
+                        }),
+                        value: 1
+                    }
+                ],
+                count: 1
             })
         ]
     };
@@ -191,4 +298,65 @@ export class StarTrekAncestries {
             })
         ]
     };
+
+    static betazoid: Ancestry = {
+        id: 'ancestry-betazoid',
+        name: 'Betazoid',
+        description: 'A telepathic humanoid species known for their empathic and telepathic abilities. Betazoids are naturally peaceful and highly empathetic.',
+        features: [
+            FeatureLogic.createSizeFeature({
+                id: 'betazoid-size',
+                sizeValue: 1,
+                sizeMod: 'M'
+            }),
+            FeatureLogic.createBonusFeature({
+                id: 'betazoid-empathy',
+                name: 'Empathic Sense',
+                description: 'You can naturally sense the emotions of others around you.',
+                field: FeatureField.Intuition,
+                value: 2
+            }),
+            FeatureLogic.createFeature({
+                id: 'betazoid-telepathy',
+                name: 'Telepathic Communication',
+                description: 'You can communicate telepathically with other willing creatures within 30 feet.'
+            }),
+            FeatureLogic.createChoiceFeature({
+                id: 'betazoid-gift',
+                name: 'Telepathic Gift',
+                description: 'Your telepathic abilities have manifested in a particular way.',
+                options: [
+                    {
+                        feature: FeatureLogic.createFeature({
+                            id: 'betazoid-projection',
+                            name: 'Telepathic Projection',
+                            description: 'You can project your thoughts more strongly, extending your telepathic range to 60 feet.'
+                        }),
+                        value: 1
+                    },
+                    {
+                        feature: FeatureLogic.createFeature({
+                            id: 'betazoid-shield',
+                            name: 'Mental Shield',
+                            description: 'You can create a mental barrier that protects you from unwanted telepathic intrusion.'
+                        }),
+                        value: 1
+                    }
+                ],
+                count: 1
+            })
+        ]
+    };
+
+    static ancestries: Ancestry[] = [
+        StarTrekAncestries.human,
+        StarTrekAncestries.vulcan,
+        StarTrekAncestries.klingon,
+        StarTrekAncestries.bajoran,
+        StarTrekAncestries.cardassian,
+        StarTrekAncestries.ferengi,
+        StarTrekAncestries.trill,
+        StarTrekAncestries.andorian,
+        StarTrekAncestries.betazoid
+    ];
 }

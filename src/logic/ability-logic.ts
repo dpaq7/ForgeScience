@@ -1,10 +1,9 @@
 import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
+import { AbilityDistanceType } from '../enums/ability-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Hero } from '../models/hero';
-import { HeroLogic } from './hero-logic';
 
 export class AbilityLogic {
 	static createTypeAction = (free = false) => {
@@ -118,7 +117,7 @@ export class AbilityLogic {
 			return distance.special;
 		}
 
-		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
+		const bonus = (hero && ability) ? 0 : 0;
 
 		let result = `${distance.type} ${distance.value + bonus}`;
 		if (distance.type === AbilityDistanceType.Line) {

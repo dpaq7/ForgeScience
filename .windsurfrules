@@ -1,0 +1,660 @@
+# Windsurf Project Guidelines
+*Last Updated: 2024-12-20T10:23:29-05:00*
+
+## Project Overview
+This document serves as a living guide for the Forge Science project, tracking our development practices, architectural decisions, and lessons learned.
+
+### Core Components
+- **Main Application Structure**
+  - React/TypeScript based frontend
+  - Component-driven architecture
+  - State management using React hooks
+
+### Key Features
+1. Hero Management System
+   - Character creation and customization
+   - Stats and abilities tracking
+   - Level progression system
+
+2. Campaign Settings
+   - Customizable game settings
+   - Homebrew content support
+   - Feature management system
+
+3. Element System
+   - Ancestries
+   - Cultures
+   - Careers
+   - Classes
+   - Domains
+   - Kits
+
+## Development Guidelines
+
+### Code Organization
+1. Component Structure
+   - Components are organized by feature in `/src/components/`
+   - Panels contain reusable UI elements
+   - Pages handle route-level components
+
+### State Management
+1. Using React Hooks
+   - useState for local component state
+   - Prop drilling for component communication
+   - JSON deep copies for state mutations
+
+### Best Practices
+1. TypeScript Usage
+   - Strong typing for all components and data structures
+   - Interface definitions for component props
+   - Enum usage for fixed value sets
+
+2. Component Design
+   - Functional components with hooks
+   - Separation of concerns between display and logic
+   - Reusable UI components in panel system
+
+## Homebrew Campaign Settings
+*Added: 2024-12-20T10:25:57-05:00*
+
+### Structure
+A campaign setting consists of the following key components:
+
+1. Core Setting Information
+   - Unique identifier (e.g., 'star-trek')
+   - Name and description
+   - isHomebrew flag
+
+2. Required Collections
+   - Ancestries
+   - Cultures
+   - Careers
+   - Classes
+   - Complications
+   - Domains
+   - Kits
+   - Skills
+   - Languages
+
+### Implementation Guidelines
+
+1. Class Design
+   - Each class must define:
+     - Unique identifier
+     - Name and description
+     - Heroic resource type (e.g., 'Command Points', 'Determination')
+     - Primary characteristics
+     - Level-based features
+     - Subclass system
+
+2. Skill System
+   - Skills should be categorized by SkillList type
+   - Include setting-specific skills (e.g., 'Starship Operations', 'Xenobiology')
+   - Provide clear descriptions for each skill
+
+3. Feature Implementation
+   - Use FeatureLogic for creating standardized features
+   - Implement bonus features with clear fields and values
+   - Consider level progression in feature design
+
+4. Balance Considerations
+   - Maintain consistent stamina and recovery values across classes
+   - Balance primary characteristics
+   - Ensure subclass options are equally viable
+
+### Best Practices
+
+1. Naming Conventions
+   - Use clear, theme-appropriate names
+   - Maintain consistent prefixes for related items
+   - Avoid generic identifiers
+
+2. Organization
+   - Separate collections into distinct files
+   - Group related elements (e.g., all Star Trek classes together)
+   - Use consistent file structure across collections
+
+3. Documentation
+   - Provide clear descriptions for all elements
+   - Document special rules or mechanics
+   - Include usage examples where appropriate
+
+## Collection File Structure and Integration
+
+### Last Updated: 2024-12-20T10:38:01-05:00
+
+### Data Organization
+Our collection system is organized in a hierarchical structure that ensures proper integration of homebrew content:
+
+1. **Core Data Managers**
+   - Located in `/src/data/`
+   - Key files:
+     - `ancestry-data.ts`
+     - `career-data.ts`
+     - `class-data.ts`
+     - `complication-data.ts`
+     - `culture-data.ts`
+     - `domain-data.ts`
+     - `kit-data.ts`
+     - `monster-group-data.ts`
+     - `skill-data.ts`
+   - Each manager implements collection methods that combine core and homebrew content
+
+2. **Collection Implementation**
+   - Collections are stored in `/src/data/collections/`
+   - Example structure (Star Trek):
+     ```
+     /collections/star-trek/
+     ├── campaign-setting.ts
+     ├── ancestries.ts
+     ├── cultures.ts
+     ├── complications.ts
+     ├── domains.ts
+     └── languages.ts
+     ```
+   - Each collection maintains its own namespace to prevent conflicts
+
+3. **Integration Points**
+   - Campaign Settings act as containers for collections
+   - Each data type (Ancestry, Culture, etc.) is loaded through its respective data manager
+   - The `Collections` utility provides sorting and filtering capabilities
+   - All collections implement standard interfaces from `/src/models/`
+
+### Why It Works
+1. **Unified Data Access**
+   - All game elements (core or homebrew) are accessed through the same data managers
+   - Data managers use the `CampaignSetting` model to determine content visibility
+   - The `isHomebrew` flag controls how content is displayed and edited
+
+2. **Type Safety**
+   - All collections implement TypeScript interfaces
+   - Enums ensure consistent values across the system
+   - Feature logic is centralized in `/src/logic/` for consistent behavior
+
+3. **Component Integration**
+   - Panel components automatically detect homebrew status
+   - Edit modes are toggled based on content ownership
+   - UI elements (ribbons, badges) clearly identify homebrew content
+
+4. **Data Flow**
+   ```
+   Collection Files → Data Managers → Campaign Settings → UI Components
+   ```
+   - Collections provide raw data
+   - Data managers handle aggregation and filtering
+   - Campaign settings control visibility and access
+   - UI components handle display and interaction
+
+This structure ensures that homebrew content seamlessly integrates with core content while maintaining proper separation and type safety.
+
+## Adding Content to Star Trek Collections
+
+### Last Updated: 2024-12-20T10:41:11-05:00
+
+### File Structure and Exports
+When adding new content to `/src/data/collections/star-trek/`, follow these guidelines:
+
+1. **File Organization**
+   - Each content type has its own file (e.g., `ancestries.ts`, `cultures.ts`)
+   - Export a static class for each collection (e.g., `StarTrekAncestries`, `StarTrekCultures`)
+   - Register new content in `campaign-setting.ts`
+
+2. **Required Imports**
+   ```typescript
+   // Base model for the content type
+   import { [ContentType] } from '../../../models/[type]';
+   // Feature creation utilities
+   import { FeatureLogic } from '../../../logic/feature-logic';
+   // Required enums
+   import { FeatureField } from '../../../enums/feature-field';
+   import { [OtherEnums] } from '../../../enums/[enum-file]';
+   ```
+
+### Adding New Content Types
+
+1. **Ancestries**
+   ```typescript
+   export class StarTrekAncestries {
+     static [ancestryName]: Ancestry = {
+       id: 'unique-uuid',
+       name: 'Species Name',
+       description: 'Species description',
+       features: [
+         FeatureLogic.createBonusFeature({
+           id: 'feature-id',
+           field: FeatureField.[Field],
+           value: number
+         })
+       ]
+     };
+   }
+   ```
+
+2. **Classes**
+   ```typescript
+   export const classes = {
+     [className]: {
+       id: 'class-[name]',
+       name: 'Class Name',
+       description: 'Class description',
+       heroicResource: 'Resource Name',
+       subclassName: 'Subclass Category',
+       subclassCount: number,
+       primaryCharacteristics: [Characteristic.Type],
+       featuresByLevel: [{
+         level: number,
+         features: [
+           FeatureLogic.createBonusFeature({
+             id: 'feature-id',
+             field: FeatureField.[Field],
+             value: number,
+             valuePerLevel: number
+           })
+         ]
+       }],
+       abilities: [],
+       subclasses: []
+     }
+   };
+   ```
+
+3. **Skills**
+   ```typescript
+   {
+     name: 'Skill Name',
+     description: 'Skill description',
+     list: SkillList.[Category]
+   }
+   ```
+
+### Integration Steps
+
+1. **Adding New Content**
+   - Create content object following type-specific template
+   - Add static export to appropriate collection class
+   - Include required features using FeatureLogic
+   - Ensure all enums match existing types
+
+2. **Updating Campaign Setting**
+   ```typescript
+   export const starTrekSetting: CampaignSetting = {
+     // ... existing settings ...
+     [contentType]: [
+       // Add new content reference here
+       StarTrek[Type].[newContent],
+       // Maintain alphabetical order
+     ]
+   };
+   ```
+
+3. **Required Fields**
+   - Every content piece must have:
+     - Unique ID (UUID format)
+     - Name (Title Case)
+     - Description (complete sentence)
+     - Required type-specific fields
+     - Features array (if applicable)
+
+### Validation Rules
+
+1. **Before Adding Content**
+   - Verify all required imports
+   - Check enum values against existing types
+   - Ensure ID uniqueness
+   - Validate feature logic compatibility
+
+2. **After Adding Content**
+   - Register in campaign setting
+   - Test content visibility in UI
+   - Verify feature calculations
+   - Check integration with existing content
+
+3. **Common Pitfalls**
+   - Missing feature IDs
+   - Incorrect enum values
+   - Incomplete feature data
+   - Missing campaign setting registration
+   - Improper nesting of features
+
+### Testing New Content
+
+1. **Development Checks**
+   ```bash
+   # Run development server
+   npm run dev
+   
+   # Access test environment
+   http://localhost:5173/forgesteel/
+   ```
+
+2. **Validation Steps**
+   - Create character using new content
+   - Verify feature calculations
+   - Test interactions with existing content
+   - Check UI display and formatting
+
+This structure ensures that new content integrates seamlessly with the existing Star Trek collection while maintaining type safety and feature compatibility.
+
+## Homebrew Property and Class Name Conventions
+
+### Last Updated: 2024-12-20T10:30:24-05:00
+
+### Enumerated Types
+When creating homebrew content, strictly adhere to the following enumerated types to maintain consistency with core systems:
+
+1. **Characteristics**
+   - Valid values: `Might`, `Agility`, `Reason`, `Intuition`, `Presence`
+   - Used for: Character stats, ability requirements, and feature prerequisites
+
+2. **Ability Properties**
+   - Usage types: `Action`, `Maneuver`, `Trigger` (Triggered Action), `Other`
+   - Distance types: `Self`, `Reach`, `Ranged`, `Aura`, `Burst`, `Cube`, `Line`, `Wall`, `Special`
+   - Keywords must match `AbilityKeyword` enum values
+
+3. **Kit Types**
+   - Types: `Martial`, `Caster`, `Stormwight`
+   - Armor categories: `Light Armor`, `Medium Armor`, `Heavy Armor`, `Shield`
+   - Weapon categories: `Bow`, `Ensnaring Weapon`, `Heavy Weapon`, `Light Weapon`, `Medium Weapon`, `Polearm`, `Unarmed Strike`, `Whip`
+   - Implement types: `Bone`, `Crystal`, `Glass`, `Metal`, `Stone`, `Wood`
+
+4. **Monster Properties**
+   - Role types: `Ambusher`, `Artillery`, `Leader`, `Brute`, `Controller`, `Defender`, `Harrier`, `Hexer`, `Mount`, `Solo`, `Support`
+   - Damage modifiers: `Immunity`, `Weakness`
+
+5. **Condition System**
+   - Status types: `Bleeding`, `Dazed`, `Frightened`, `Grabbed`, `Prone`, `Restrained`, `Slowed`, `Taunted`, `Weakened`
+   - End conditions: `End of turn`, `End of encounter`, `Resistance ends`
+
+6. **Skill System**
+   - Categories: `Crafting`, `Exploration`, `Interpersonal`, `Intrigue`, `Lore`, `Science`, `Medicine`, `Technology`
+
+### Property Naming Rules
+1. All IDs must be unique UUIDs
+2. Names should be in Title Case
+3. Descriptions should be complete sentences with proper punctuation
+4. Feature names must be unique within their context (class, ancestry, etc.)
+5. Custom properties must extend, not replace, core property types
+
+### Class Naming Conventions
+1. Use PascalCase for class names
+2. Use camelCase for property names
+3. Maintain consistent prefix/suffix patterns with core content
+4. Follow the established component hierarchy:
+   - Panels: `[Type]Panel` (e.g., `MonsterPanel`, `KitPanel`)
+   - Modals: `[Type]Modal` (e.g., `MonsterModal`, `KitModal`)
+   - Sections: `[Type]Section` (e.g., `MonsterSection`, `KitSection`)
+
+### Panel Modes
+Use the established `PanelMode` enum for consistent display modes:
+- `Compact`: Condensed view
+- `Full`: Detailed view
+
+### Implementation Guidelines
+1. Always implement required interfaces from core models
+2. Extend base classes rather than creating new hierarchies
+3. Maintain type safety by using TypeScript interfaces and types
+4. Follow the established component lifecycle patterns
+
+## Import Path Standards
+1. **Enum Imports**
+   - All enums should be imported from `/src/enums/` directory
+   - Use relative paths with format: `../../enums/[enum-name]`
+   - Common enums:
+     - `ability-distance-type` (NOT `abiity-distance-type`)
+     - `ability-keyword`
+     - `characteristic`
+     - `feature-field`
+     - `skill-list`
+
+2. **Import Path Consistency**
+   - Use consistent relative paths across similar files
+   - For files in `/src/data/classes/`, use `../../` prefix
+   - For files in `/src/data/collections/star-trek/classes/`, use `../../../../` prefix
+   - Avoid mixing path depths for similar imports
+
+3. **Import Path Validation**
+   - Run tests to verify import paths are correct
+   - Common issues to watch for:
+     - Misspelled enum names (e.g., `abiity` vs `ability`)
+     - Incorrect path depth
+     - Inconsistent relative paths
+
+## Base Character Values and Calculations
+
+### Last Updated: 2024-12-22T13:56:25-05:00
+
+To ensure consistent and balanced character creation across all settings, we've established base values for key character attributes:
+
+1. **Base Values**
+   - Stamina: 10 (base value for all heroes)
+   - Speed: 6 (base movement rate)
+   - Stability: 4 (base mental fortitude)
+
+2. **Value Calculation**
+   Each final value is calculated by combining:
+   - Base value (as defined above)
+   - Maximum value from equipped kits
+   - Bonuses from features (including level-based bonuses)
+
+3. **Implementation Details**
+   - Located in `/src/logic/hero-logic.ts`
+   - Methods:
+     - `getStamina()`
+     - `getSpeed()`
+     - `getStability()`
+   - Each method follows the same pattern:
+     1. Start with base value
+     2. Add maximum bonus from kits
+     3. Add feature bonuses (with level scaling)
+
+4. **Design Rationale**
+   - Base values ensure heroes are viable from creation
+   - Kit bonuses allow for equipment-based customization
+   - Feature bonuses enable progression and specialization
+
+## Documentation Synchronization
+
+### Last Updated: 2024-12-20T11:51:13-05:00
+
+### Overview
+When making changes to the Star Trek campaign setting, it's crucial to maintain synchronization between code implementation and documentation. This ensures that our documentation remains a reliable source of truth for the project.
+
+### Required Documentation Updates
+
+1. **Campaign Overview Document**
+   - Location: `/src/data/collections/star-trek/CAMPAIGN_OVERVIEW.md`
+   - Update when:
+     - Adding new content
+     - Modifying existing content
+     - Changing implementation details
+     - Running new tests
+   - Include:
+     - Timestamp of changes
+     - Description of modifications
+     - Impact on other systems
+     - Test results if applicable
+
+2. **Test Documentation**
+   - Location: `/src/data/collections/star-trek/__tests__/TESTS.md`
+   - Update when:
+     - Running new tests
+     - Modifying test cases
+     - Adding test coverage
+   - Include:
+     - Test results
+     - Performance metrics
+     - Coverage statistics
+
+### Update Format
+
+```markdown
+### YYYY-MM-DDThh:mm:ss-05:00
+- [Category] Description of change
+- [Files Affected] List of modified files
+- [Impact] Any system-wide effects
+```
+
+### Categories
+- **Content**: New or modified game content
+- **Implementation**: Changes to code structure
+- **Test**: New or updated tests
+- **Documentation**: Changes to documentation files
+
+### Verification Steps
+1. Update implementation files
+2. Run relevant tests
+3. Update CAMPAIGN_OVERVIEW.md with changes
+4. Update TESTS.md if tests were run
+5. Update this rules file if conventions change
+
+This documentation synchronization ensures that:
+- All team members understand current implementation
+- Changes are properly tracked and timestamped
+- Test coverage is documented
+- Implementation details are easily accessible
+
+## Development Server Configuration
+
+### Last Updated: 2024-12-22T14:28:39-05:00
+
+### Local Development
+1. **Starting the Dev Server**
+   ```bash
+   npm run dev -- --host  # Exposes server on local network
+   ```
+   - Default port: 5173
+   - Host flag makes server accessible on local network
+
+2. **External Access Setup**
+   - Install ngrok: `brew install ngrok`
+   - Configure with auth token: `ngrok config add-authtoken YOUR_TOKEN`
+   - Start tunnel: `ngrok http 5173`
+
+3. **Best Practices**
+   - Start dev server before ngrok tunnel
+   - Use `--log=stdout` and `--log-level=debug` for detailed ngrok logs
+   - Keep ngrok auth token secure and never commit to version control
+   - Note that ngrok URLs change with each session restart
+
+4. **Troubleshooting**
+   - If connection fails, restart both dev server and ngrok
+   - Check correct port forwarding (default 5173)
+   - Verify dev server is running before starting ngrok
+   - Use `pkill -f vite` and `pkill -f ngrok` to clean up processes
+
+### Changelog
+
+### 2024-12-22T14:28:39-05:00
+- Added development server configuration documentation
+- Documented ngrok setup for external access
+- Added troubleshooting guidelines for dev server
+
+## Change Log
+
+### 2024-12-20
+- Initial documentation created
+- Documented core architecture and component structure
+- Established guidelines for future development
+- Converted to system file (.windsurfrules)
+
+### 2024-12-22
+- Fixed HeroState interface implementation
+  - Added missing properties: projectPoints, conditions, inventory
+  - Updated test files to include new properties
+- Updated Kit interface implementation
+  - Changed mobility property from number to boolean
+  - Added area property to all kits
+  - Fixed kit stamina and characteristic calculations
+- Updated Language interface in campaign settings
+  - Removed type property from languages
+  - Simplified language structure to name and description only
+- Added documentation for base character values and updated changelog
+
+## Known Issues and Solutions
+
+### Circular Dependencies
+1. **Ability Logic Circular Dependency (2024-12-22)**
+   - Issue: Circular dependency between `hero-logic.ts`, `campaign-setting-data.ts`, `ancestry-data.ts`, and `ability-logic.ts`
+   - Resolution:
+     - Removed unnecessary import of `HeroLogic` from `AbilityLogic`
+     - Split Star Trek classes into individual files under `/src/data/collections/star-trek/classes/`
+     - Updated `classes.ts` to import and export individual class files
+   - Impact: Fixed test failures and improved code organization
+   - Dependency Chain Before:
+     ```
+     hero-logic.ts -> campaign-setting-data.ts -> ancestry-data.ts -> ability-logic.ts -> hero-logic.ts
+     ```
+   - Dependency Chain After:
+     ```
+     hero-logic.ts -> campaign-setting-data.ts -> ancestry-data.ts -> ability-logic.ts
+     ```
+
+### File Naming
+1. **Ability Distance Type Filename (2024-12-20)**
+   - Note: The file `src/enums/abiity-distance-type.ts` contains a typo in its name
+   - Decision: Must remain unchanged due to existing dependencies
+   - Impact: No functional issues, but should be noted for future reference
+
+## Lessons Learned
+*This section will be updated as we encounter and solve challenges*
+
+1. Initial Observations
+   - TypeScript provides strong type safety for complex game state
+   - Component-based architecture allows for flexible feature development
+   - Panel system enables consistent UI patterns
+
+## TODO
+- [ ] Document state management patterns
+- [ ] Add specific code examples for common patterns
+- [ ] Create troubleshooting guide
+- [ ] Document testing strategy
+
+## Star Trek Campaign Setting Progress
+
+### Classes Implementation
+1. **Class Structure**
+   - Each class is defined in its own file under `/src/data/collections/star-trek/classes/`
+   - Classes include:
+     - Starfleet Officer
+     - Vigilante
+     - Trader
+     - Smuggler
+     - Diplomat
+
+2. **Ability System**
+   - Each class has three core abilities:
+     - Signature ability (1 resource point)
+     - 3-point ability (2 resource points)
+     - 5-point ability (3 resource points)
+   - Abilities follow consistent pattern:
+     - Unique ID and thematic name
+     - Clear description
+     - Action type
+     - Keywords
+     - Distance and target specifications
+     - Three-tiered power roll effects
+     - Resource-based special effect
+
+3. **Resource Systems**
+   - Each class has a unique resource:
+     - Command Points (Starfleet Officer)
+     - Determination (Vigilante)
+     - Profit (Trader)
+     - Luck (Smuggler)
+     - Influence (Diplomat)
+
+4. **Testing Strategy**
+   - Comprehensive test suite in `/src/data/collections/star-trek/__tests__/hero-builder.test.ts`
+   - Tests verify:
+     - Class ability definitions
+     - Resource costs
+     - Ability accessibility through HeroLogic
+     - Power roll characteristics
+
+### Known Issues
+1. **File Structure**
+   - Maintaining typo in `abiity-distance-type.ts` to avoid breaking dependencies
+   - Plan to fix in future major version update
+
+---
+*This is a living document. Updates should be made as new patterns emerge or existing ones evolve.*

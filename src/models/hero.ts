@@ -6,6 +6,8 @@ import { Complication } from './complication';
 import { Culture } from './culture';
 import { HeroClass } from './class';
 import { Item } from './item';
+import { Kit } from './kit';
+import { Feature } from './feature'; // added import statement for Feature
 
 export interface Condition {
 	id: string;
@@ -38,6 +40,9 @@ export interface Hero {
 	class: HeroClass | null;
 	career: Career | null;
 	complication: Complication | null;
+	kits: Kit[];
 
 	state: HeroState;
+	features: Feature[];
+    level: number;
 }

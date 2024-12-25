@@ -2,7 +2,7 @@ import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
+import { AbilityDistanceType } from "../../../enums/ability-distance-type";
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';

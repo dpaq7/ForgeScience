@@ -1,7 +1,8 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityDistanceType } from '../enums/ability-distance-type';
+
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityLogic } from './ability-logic';
 import { CampaignSetting } from '../models/campaign-setting';
 import { CampaignSettingData } from '../data/campaign-setting-data';
@@ -65,6 +66,10 @@ export class HeroLogic {
 
 	static getFeatures = (hero: Hero) => {
 		const features: Feature[] = [];
+
+		if (hero.features) {
+			features.push(...hero.features);
+		}
 
 		if (hero.ancestry) {
 			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry));
@@ -345,6 +350,18 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			}
 		}
 
+		// Add bonuses from features
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField[characteristic])
+			.forEach(data => {
+				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
+			});
+
 		return value;
 	};
 
@@ -436,7 +453,8 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	///////////////////////////////////////////////////////////////////////////
 
 	static getStamina = (hero: Hero) => {
-		let value = 0;
+		// Base stamina value for all heroes
+		let value = 10;
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);
@@ -509,7 +527,8 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	};
 
 	static getSpeed = (hero: Hero) => {
-		let value = 0;
+		// Base speed value for all heroes
+		let value = 6;
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);
@@ -530,7 +549,8 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	};
 
 	static getStability = (hero: Hero) => {
-		let value = 0;
+		// Base stability value for all heroes
+		let value = 4;
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);
@@ -765,12 +785,32 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			}
 		}
 
-		if (hero.state.xp === undefined) {
-			hero.state.xp = 0;
-		}
-
-		if (hero.state.inventory === undefined) {
-			hero.state.inventory = [];
+		// Initialize all state properties if they don't exist
+		if (!hero.state) {
+			hero.state = {
+				staminaDamage: 0,
+				recoveriesUsed: 0,
+				victories: 0,
+				xp: 0,
+				heroicResource: 0,
+				heroTokens: 0,
+				renown: 0,
+				projectPoints: 0,
+				conditions: [],
+				inventory: []
+			};
+		} else {
+			// Initialize individual state properties if they don't exist
+			if (hero.state.staminaDamage === undefined) hero.state.staminaDamage = 0;
+			if (hero.state.recoveriesUsed === undefined) hero.state.recoveriesUsed = 0;
+			if (hero.state.victories === undefined) hero.state.victories = 0;
+			if (hero.state.xp === undefined) hero.state.xp = 0;
+			if (hero.state.heroicResource === undefined) hero.state.heroicResource = 0;
+			if (hero.state.heroTokens === undefined) hero.state.heroTokens = 0;
+			if (hero.state.renown === undefined) hero.state.renown = 0;
+			if (hero.state.projectPoints === undefined) hero.state.projectPoints = 0;
+			if (hero.state.conditions === undefined) hero.state.conditions = [];
+			if (hero.state.inventory === undefined) hero.state.inventory = [];
 		}
 	};
 }

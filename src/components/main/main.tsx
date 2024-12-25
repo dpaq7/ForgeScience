@@ -155,14 +155,11 @@ export const Main = (props: Props) => {
 	const addHero = () => {
 		const hero = FactoryLogic.createHero([
 			CampaignSettingData.core.id,
-			CampaignSettingData.orden.id
+			CampaignSettingData.orden.id,
+			CampaignSettingData.starTrek.id
 		]);
 
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		copy.push(hero);
-		Collections.sort(copy, h => h.name);
-
-		persistHeroes(copy);
+		// Don't persist the hero until it's fully created
 		setPage(Page.HeroEdit);
 		setSelectedHero(hero);
 	};
@@ -224,10 +221,13 @@ export const Main = (props: Props) => {
 			const index = list.findIndex(h => h.id === hero.id);
 			if (index !== -1) {
 				list[index] = hero;
-				persistHeroes(list);
-				setPage(Page.HeroView);
-				setSelectedHero(hero);
+			} else {
+				list.push(hero); // Add new hero if it doesn't exist
+				Collections.sort(list, h => h.name);
 			}
+			persistHeroes(list);
+			setPage(Page.HeroView);
+			setSelectedHero(hero);
 		}
 	};
 
@@ -1276,7 +1276,7 @@ export const Main = (props: Props) => {
 					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
 				</div>
 				<div className='main-footer-section'>
-					DRAW STEEL © 2024 MCDM Productions, LLC
+					DRAW STEEL &copy; 2024 MCDM Productions, LLC
 				</div>
 				<div className='main-footer-section'>
 					Designed by Andy Aiken

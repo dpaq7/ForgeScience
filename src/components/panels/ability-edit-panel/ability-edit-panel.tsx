@@ -1,6 +1,6 @@
 import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Ability } from '../../../models/ability';
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
+import { AbilityDistanceType } from '../../../enums/ability-distance-type'; // Fix typo in import path
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityUsage } from '../../../enums/ability-usage';

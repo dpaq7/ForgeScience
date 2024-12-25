@@ -16,6 +16,7 @@ import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
 import { talent } from './classes/talent';
 import { troubadour } from './classes/troubadour';
+import { starTrekSetting } from './collections/star-trek/campaign-setting';
 
 export class CampaignSettingData {
 	static core: CampaignSetting = {
@@ -234,15 +235,18 @@ export class CampaignSettingData {
 		]
 	};
 
-	static getCampaignSettings = (homebrew: CampaignSetting[]) => {
-		const list: CampaignSetting[] = [
-			this.core,
-			// this.coreUnreleased,
-			this.orden
+	static starTrek: CampaignSetting = starTrekSetting;
+
+	static getCampaignSettings = (homebrewSettings: CampaignSetting[]) => {
+		return [
+			CampaignSettingData.core,
+			CampaignSettingData.orden,
+			CampaignSettingData.starTrek,
+			...homebrewSettings
 		];
+	};
 
-		list.push(...Collections.sort(homebrew, cs => cs.name));
-
-		return list;
+	static getLanguages = (settings: CampaignSetting[]) => {
+		return Collections.distinct(settings.flatMap(cs => cs.languages), l => l.name);
 	};
 }

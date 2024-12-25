@@ -3,7 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-de
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
 import { Ability } from '../../../../models/ability';
-import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
+import { AbilityDistanceType } from '../../../../enums/ability-distance-type'; // Fix typo in import path
 import { AbilityEditPanel } from '../../../panels/ability-edit-panel/ability-edit-panel';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Ancestry } from '../../../../models/ancestry';

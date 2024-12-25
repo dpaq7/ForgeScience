@@ -1,4 +1,4 @@
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
+import { AbilityDistanceType } from '../enums/ability-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
